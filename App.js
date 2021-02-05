@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import Home from './src/components/Home'
+import Home from './components/Home'
 
 export default class App extends React.Component {
   render() {
