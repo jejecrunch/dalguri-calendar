@@ -8,9 +8,11 @@ import {
     TouchableOpacity,
     Platform,
     Image,
+    Keyboard, TouchableWithoutFeedback,
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import Join from './Join.js';
 
 class Login extends React.Component{
   state = {
@@ -26,6 +28,7 @@ class Login extends React.Component{
   render() {
 
     return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
 
         <Image source={require('../assets/images/logo.png') }
@@ -36,121 +39,60 @@ class Login extends React.Component{
               <TextInput
                 title="id"
                 onChangeText={(id) => this.setState({ id })}
-                style={styles.id}
+                style={styles.textinput}
                 placeholder='아이디를 입력하세요'
               />
               <TextInput
                 title="pw"
                 onChangeText={(pw) => this.setState({ pw })}
-                style={styles.pw}
+                style={styles.textinput}
                 secureTextEntry = {true}
                 placeholder='비밀번호를 입력하세요'
               />
-
+              <View style={styles.button}>
               <Button
                 onPress={this.login.bind(this)}
-                title="LOGIN"
-                style={styles.btnLogin}
+                title="login"
+                color="black"
               />
               <Button
                 onPress={() => this.props.navigation.navigate('Join')}
-                title="JOIN"
-                style={styles.btnJoin}
+                title="join"
+                color="black"
               />
+              </View>
             </View>
         </View>
+      </TouchableWithoutFeedback>
     )
   }
-}
-
-class Join extends React.Component {
-
-    state = {
-      id: '',
-      pw: '',
-      isWomen: '',
-      email: '',
-    };
-
-    joinSuccess(){
-      const { id, pw, isWomen, email } = this.state;
-      alert(`id: ${id}, password: ${pw}, isWomen: ${isWomen}, email: ${email}`);
-    };
-
-    render(){
-        return (
-          <View style={styles.container}>
-              <Button
-                title = '로그인 화면으로 돌아가기'
-                onPress = {()=>this.props.navigation.navigate('Login')}
-
-              />
-              <Text>Join</Text>
-
-              <View style={styles.join}>
-                  <TextInput
-                    title="id"
-                    onChangeText={(id) => this.setState({ id })}
-                    style={styles.textinput}
-                    placeholder='아이디를 입력하세요'
-                  />
-                  <Button
-                    title="중복확인"
-                  />
-                  <TextInput
-                    title="pw"
-                    style={styles.textinput}
-                    secureTextEntry = {true}
-                    placeholder='비밀번호를 입력하세요'
-                  />
-                  <TextInput
-                    title="pw"
-                    onChangeText={(pw) => this.setState({ pw })}
-                    style={styles.textinput}
-                    secureTextEntry = {true}
-                    placeholder='비밀번호를 동일하게 한번 더 입력하세요'
-                  />
-                  <TextInput
-                    title="isWomen"
-                    style={styles.textinput}
-                    onChangeText={(isWomen) => this.setState({ isWomen })}
-                    placeholder='주민번호 뒷자리 중 첫번째 숫자를 입력하세요'
-                  />
-                  <TextInput
-                    title="email"
-                    onChangeText={(email) => this.setState({ email })}
-                    style={styles.textinput}
-                    placeholder='이메일을 입력하세요'
-                  />
-
-                  <Button
-                    onPress={this.joinSuccess.bind(this)}
-                    title="JOIN"
-                  />
-                </View>
-          </View>
-
-        )
-   }
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 56,
-        marginBottom : 16,
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+      backgroundColor: 'white',
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
     },
     logo: {
       width: 175,
       height: 175,
+      marginTop: 56,
+      marginBottom: -56,
     },
     textinput: {
       color: 'black',
       fontSize: 15,
       marginBottom : 30,
+      borderColor: 'black',
+      borderWidth: 1,
+      width: 200,
+      height: 35,
+    },
+    button:{
+      flexDirection: 'row',
     },
     login: {
       flex: 1,
@@ -158,12 +100,6 @@ const styles = StyleSheet.create({
       marginBottom : 16,
       justifyContent: "center",
       alignItems: "center",
-    },
-    btnLogin: {
-      marginTop: 30,
-    },
-    btnJoin: {
-      marginTop: 30,
     },
 })
 
@@ -177,6 +113,10 @@ const AppNavigator = createStackNavigator(
 );
 
 Login.navigationOptions = {
+  header: null,
+}
+
+Join.navigationOptions = {
   header: null,
 }
 
